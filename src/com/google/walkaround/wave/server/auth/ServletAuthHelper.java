@@ -25,9 +25,6 @@ import com.google.walkaround.util.server.RetryHelper.PermanentFailure;
 
 import org.waveprotocol.wave.model.wave.ParticipantId;
 
-import java.io.IOException;
-import java.util.logging.Logger;
-
 import javax.annotation.Nullable;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -35,6 +32,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Utility methods for authentication filters.
@@ -149,7 +149,7 @@ public class ServletAuthHelper {
 
     @Override @Nullable public AccountStore.Record getAccount()
         throws PermanentFailure, IOException {
-      return accountStore.get(new StableUserId(user.getUserId()));
+      return accountStore.get(StableUserId.forUser(user));
     }
   }
 
