@@ -1,57 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="proto_src"/>
-	<classpathentry kind="src" output="test-classes" path="test"/>
-	<classpathentry kind="src" path="build/gen/messages"/>
-	<classpathentry kind="src" path="build/gen/gxp"/>
-	<classpathentry kind="src" path="more-guava"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="third_party/gson/gson-1.7.1.jar"/>
-	<classpathentry kind="lib" path="third_party/joda-time/joda-time-2.0.jar"/>
-	<classpathentry kind="lib" path="third_party/antlr/antlr-3.4-complete.jar"/>
-	<classpathentry kind="lib" path="third_party/protobuf/protobuf.jar"/>
-	<classpathentry kind="lib" path="third_party/commons-cli/commons-cli-1.2.jar"/>
-	<classpathentry kind="lib" path="third_party/guava/guava-gwt-10.0.1.jar"/>
-	<classpathentry kind="lib" path="third_party/guava/guava-10.0.1.jar"/>
-	<classpathentry kind="lib" path="third_party/google-api-client/google-http-client-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="third_party/google-api-client/google-api-client-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="third_party/google-api-client/jackson-core-asl-1.6.7.jar"/>
-	<classpathentry kind="lib" path="third_party/google-api-client/google-oauth-client-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="third_party/google-api-client/google-http-client-extensions-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="third_party/junit/junit-4.10.jar"/>
-	<classpathentry kind="lib" path="third_party/gdata/gdata-base-1.0.jar"/>
-	<classpathentry kind="lib" path="third_party/gdata/gdata-client-1.0.jar"/>
-	<classpathentry kind="lib" path="third_party/gdata/jsr305.jar"/>
-	<classpathentry kind="lib" path="third_party/gdata/gdata-contacts-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/gdata/gdata-core-1.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-assistedinject-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-jndi-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-spring-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-jmx-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-multibindings-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-struts2-plugin-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-throwingproviders-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/aopalliance.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-grapher-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-servlet-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/guice-persist-3.0.jar"/>
-	<classpathentry kind="lib" path="third_party/guice/javax.inject.jar"/>
-	<classpathentry kind="lib" path="third_party/gxp/gxp-0.2.4-beta.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-mapreduce/hadoop-0.20.2-core.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-mapreduce/charts4j-1.2.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-mapreduce/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="third_party/commons-codec/commons-codec-1.5.jar"/>
-	<classpathentry kind="lib" path="third_party/gwt/gwt-dev.jar"/>
-	<classpathentry kind="lib" path="third_party/gwt/gwt-user.jar"/>
-	<classpathentry kind="lib" path="third_party/gwt/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="lib" path="third_party/gwt/validation-api-1.0.0.GA-sources.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-sdk/sdk/lib/impl/appengine-api.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-sdk/sdk/lib/impl/appengine-api-labs.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-sdk/sdk/lib/impl/appengine-api-stubs.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-sdk/sdk/lib/testing/appengine-testing.jar"/>
-	<classpathentry kind="lib" path="third_party/appengine-mapreduce/appengine-mapper.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/wave-protocol"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/classes" path="proto_src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="test">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/classes" path="build/gen/messages">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/classes" path="build/gen/gxp">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/classes" path="more-guava">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
