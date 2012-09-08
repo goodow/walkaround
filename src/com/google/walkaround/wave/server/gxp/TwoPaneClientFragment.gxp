@@ -71,13 +71,6 @@
     <p/>
   </gxp:if>
   
-  <div id='left-pane'>
-    <iframe src='/inbox?embedded=true'/>
-  </div>
-  <div id='right-pane'>
-    <iframe id='wave-iframe' name='wave' onload='onWaveLoad(this.contentWindow.location);'/>
-  </div>
-
   <script type='text/javascript'>
     function setLocationWaveId(id) {
         parent.location.hash = "wave=" + id;
@@ -92,12 +85,22 @@
                 return unescape(pair[1]);
             }
         }
-        alert('Query variable ' + variable + ' not found in ' + url);
+        alert('Query variable ' + variable + ' not found in ' + search);
     }
     // End
     function onWaveLoad(location) {
         setLocationWaveId(getQueryVariable(location.search, "id"));
     }
+  </script>
+  
+  <div id='left-pane'>
+    <iframe src='/inbox?embedded=true'/>
+  </div>
+  <div id='right-pane'>
+    <iframe id='wave-iframe' name='wave' onload='onWaveLoad(this.contentWindow.location);'/>
+  </div>
+
+  <script type='text/javascript'>
     if (location.hash.length > 0) {
         // TODO(ohler): Make links containing hash work correctly on mobile.
         document.getElementById('wave-iframe').src =
