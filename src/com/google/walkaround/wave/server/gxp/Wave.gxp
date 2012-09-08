@@ -34,6 +34,7 @@
     <head>
       <meta http-equiv='Content-type' content='text/html;charset=UTF-8'/>
       <meta name='gwt:property' content='locale=en'/>
+      <meta name='gwt:property' content='baseUrl=moon/'/>
       <title><gxp:msg>Walkaround</gxp:msg></title>
       <style type='text/css'>
         /* Full screen box. */

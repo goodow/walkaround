@@ -71,8 +71,7 @@ import java.util.logging.Logger;
  * @author ohler@google.com (Christian Ohler)
  */
 public class UndercurrentHandler extends AbstractHandler {
-  private static final String nocacheJs = Util.slurpRequired(
-      "com.google.walkaround.wave.client.Walkaround.nocache.js");
+  private static final String nocacheJs = Util.slurpRequired("moon/moon.nocache.js");
 
   @SuppressWarnings("unused")
   private static final Logger log = Logger.getLogger(UndercurrentHandler.class.getName());
