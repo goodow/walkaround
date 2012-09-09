@@ -177,11 +177,11 @@
       <b><gxp:msg>Find and import all waves</gxp:msg></b>
       <br/>
       <gxp:eval expr='instanceSelectionHtml'/>
-      Sharing of imported wave:
-      <input type='radio' name='sharingmode' value='private'/> private
-      <input type='radio' name='sharingmode' value='shared'/> shared
+      <gxp:nomsg>Sharing of imported wave:</gxp:nomsg>
+      <input type='radio' name='sharingmode' value='private'/><gxp:nomsg> private</gxp:nomsg>
+      <input type='radio' name='sharingmode' value='shared'/><gxp:nomsg> shared</gxp:nomsg>
       <input type='radio' name='sharingmode' value='privateunlessparticipant'/>
-      shared if I am a participant, private otherwise
+      <gxp:nomsg>shared if I am a participant, private otherwise</gxp:nomsg>
       <input type='hidden' name='action' value='findandimport'/>
       <input type='hidden' name='token' expr:value='token'/>
       <br/>
@@ -193,13 +193,13 @@
     <form method='post' action='import'>
       <input type='hidden' name='action' value='importwavelet'/>
       <input type='hidden' name='token' expr:value='token'/>
-      Wave ID: <input name='waveid'/>
-      Wavelet ID: <input name='waveletid'/>
+      <gxp:nomsg>Wave ID: </gxp:nomsg><input name='waveid'/>
+      <gxp:nomsg>Wavelet ID: </gxp:nomsg><input name='waveletid'/>
       <br/>
       <gxp:eval expr='instanceSelectionHtml'/>
-      Sharing:
-      <input type='radio' name='sharingmode' value='private'/> private
-      <input type='radio' name='sharingmode' value='shared'/> shared
+      <gxp:nomsg>Sharing:</gxp:nomsg>
+      <input type='radio' name='sharingmode' value='private'/><gxp:nomsg> private</gxp:nomsg>
+      <input type='radio' name='sharingmode' value='shared'/><gxp:nomsg> shared</gxp:nomsg>
       <br/>
       <input type='submit' value='Import wavelet'/>
     </form>

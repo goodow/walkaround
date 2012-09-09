@@ -18,16 +18,16 @@ package com.google.walkaround.util.server.servlet;
 
 import com.google.common.collect.ImmutableList;
 
+import javax.annotation.Nullable;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import javax.annotation.Nullable;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @see HandlerServlet
@@ -83,10 +83,7 @@ public abstract class AbstractHandler {
   }
 
   public static Locale getLocale(HttpServletRequest req) {
-    // Once we have translations, we should use req.getLocale() and fall back to
-    // Locale.US only for missing translations.
-    log.info("Request locale is " + req.getLocale() + "; ignoring");
-    return Locale.US;
+    return req.getLocale();
   }
 
 }

@@ -22,6 +22,7 @@
   xmlns='http://www.w3.org/1999/xhtml'
   xmlns:expr='http://google.com/2001/gxp/expressions'
   xmlns:gxp='http://google.com/2001/gxp'
+  xmlns:msg='http://google.com/2001/gxp/msg'
   xmlns:nomsg='http://google.com/2001/gxp/nomsg'>
 
   <gxp:import class='com.google.walkaround.wave.server.gxp.InboxDisplayRecord'/>
@@ -185,27 +186,27 @@
     <form method='post' action='inbox' expr:target='target' style='float:left'>
       <input type='hidden' name='action' value='newwave'/>
       <input type='hidden' name='token' expr:value='token'/>
-      <input id='new-wave' type='submit' value='New wave'/>
+      <input id='new-wave' type='submit' msg:value='New wave'/>
     </form>
 
     <form id='searchform' method='get' action='inbox' style='float:left;'>
       <input id='query' type='text' name='q' expr:value='query'
           onfocus='var self=this;setTimeout(function(){self.select();},1)'/>
-      <input id='search' type='submit' value='Search'/>
+      <input id='search' type='submit' msg:value='Search'/>
       <gxp:if cond='embedded'>
         <input type='hidden' name='embedded' value='true'/>
       </gxp:if>
       <div id='paging'>
         <gxp:msg>Results page: </gxp:msg>
         <button name='page' expr:value='page - 1'
-            expr:disabled='page == 0'>&lt;</button>
+            expr:disabled='page == 0'><gxp:nomsg>&lt;</gxp:nomsg></button>
         <gxp:eval expr='page + 1'/>
         <button name='page' expr:value='page + 1'
-            expr:disabled='waveRecords.isEmpty()'>&gt;</button>
+            expr:disabled='waveRecords.isEmpty()'><gxp:nomsg>&gt;</gxp:nomsg></button>
         <div id='nav-links'>
           <gxp:msg>Go to:</gxp:msg>
-          <a href='javascript:search("")'>Inbox</a> |
-          <a href='javascript:search("is:unread")'>Unread</a>
+          <a href='javascript:search("")'><gxp:msg>Inbox</gxp:msg></a><gxp:nomsg> |</gxp:nomsg>
+          <a href='javascript:search("is:unread")'><gxp:msg>Unread</gxp:msg></a>
         </div>
       </div>
     </form>
@@ -233,7 +234,7 @@
                         <span class='record-title'><i><gxp:msg>(no title)</gxp:msg></i></span>
                       <gxp:else/>
                         <span class='record-title'><gxp:eval expr='record.getTitle()'/></span>
-                        <span class='snippet'> - <gxp:eval expr='HtmlClosures.fromHtml(
+                        <span class='snippet'><gxp:nomsg> - </gxp:nomsg><gxp:eval expr='HtmlClosures.fromHtml(
                             record.getSnippetHtml())'/></span>
                       </gxp:if>
                     </a>

@@ -85,11 +85,14 @@
                 return unescape(pair[1]);
             }
         }
-        alert('Query variable ' + variable + ' not found in ' + search);
+        // alert('Query variable ' + variable + ' not found in ' + search);
     }
     // End
     function onWaveLoad(location) {
-        setLocationWaveId(getQueryVariable(location.search, "id"));
+        var waveId = getQueryVariable(location.search, "id");
+        if (waveId) {
+          setLocationWaveId(waveId);
+        }
     }
   </script>
   

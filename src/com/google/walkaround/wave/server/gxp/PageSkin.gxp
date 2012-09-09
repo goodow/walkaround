@@ -117,12 +117,12 @@
       <div id='bottom-back2'> </div-->
       <div class='main'>
         <div id='header'>
-          <span id='title'><gxp:nomsg>walkaround</gxp:nomsg></span>
+          <span id='title'><gxp:msg>walkaround</gxp:msg></span>
           <span id='top-links'>
             <span id='user-email'>
               <gxp:eval expr='userEmail'/>
             </span>
-            <a href='/logout'>logout</a>
+            <a href='/logout'><gxp:msg>logout</gxp:msg></a>
           </span>
         </div>
         <gxp:eval expr='content'/>
