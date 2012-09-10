@@ -21,9 +21,9 @@ import com.google.inject.servlet.RequestScoped;
 
 import org.waveprotocol.wave.model.wave.ParticipantId;
 
-import java.util.logging.Logger;
-
 import javax.annotation.Nullable;
+
+import java.util.logging.Logger;
 
 /**
  * Holds information about the user we are acting as.  Many helper classes
@@ -114,6 +114,10 @@ public class UserContext {
   public UserContext setOAuthCredentials(@Nullable OAuthCredentials oAuthCredentials) {
     this.oAuthCredentials = oAuthCredentials;
     return this;
+  }
+
+  public boolean isUserAdmin() {
+    return false;
   }
 
   @Override public String toString() {

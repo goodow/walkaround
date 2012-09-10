@@ -16,8 +16,6 @@
 
 package com.google.walkaround.wave.server.admin;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
 import com.google.gxp.base.GxpContext;
 import com.google.gxp.html.HtmlClosure;
 import com.google.inject.Inject;
@@ -25,13 +23,14 @@ import com.google.walkaround.util.server.servlet.AbstractHandler;
 import com.google.walkaround.util.server.servlet.BadRequestException;
 import com.google.walkaround.wave.server.Flag;
 import com.google.walkaround.wave.server.FlagName;
+import com.google.walkaround.wave.server.auth.UserContext;
 import com.google.walkaround.wave.server.gxp.Admin;
-
-import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Serves a page that has a few options for admins.
@@ -46,14 +45,14 @@ public class AdminHandler extends AbstractHandler {
   @SuppressWarnings("unused")
   private static final Logger log = Logger.getLogger(AdminHandler.class.getName());
 
-  @Inject UserService userService;
-  @Inject User user;
+  @Inject UserContext userContext;
   @Inject @Flag(FlagName.ANALYTICS_ACCOUNT) String analyticsAccount;
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    log.warning("Admin page requested by " + user.getEmail());
-    if (!userService.isUserAdmin()) {
+    log.warning("Admin page requested by "
+        + (userContext.hasParticipantId() ? userContext.getParticipantId() : "(not logged in)"));
+    if (!userContext.isUserAdmin()) {
       log.severe("Admin page requested by non-admin user!");
       throw new BadRequestException();
     }

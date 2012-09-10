@@ -16,7 +16,6 @@
 
 package com.google.walkaround.wave.server.servlet;
 
-import com.google.appengine.api.users.UserService;
 import com.google.apphosting.api.ApiProxy;
 import com.google.common.base.Throwables;
 import com.google.gxp.html.HtmlClosure;
@@ -25,11 +24,8 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.walkaround.util.server.servlet.HttpException;
+import com.google.walkaround.wave.server.auth.UserContext;
 import com.google.walkaround.wave.server.gxp.ErrorPage;
-
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -38,6 +34,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author ohler@google.com (Christian Ohler)
@@ -61,7 +61,7 @@ public class ServerExceptionFilter implements Filter {
     TRUSTED;
   }
 
-  @Inject Provider<UserService> userService;
+  @Inject Provider<UserContext> userCtx;
   @Inject Provider<UserTrustStatus> trusted;
   @Inject Provider<PageSkinWriter> pageSkinWriter;
 
@@ -91,9 +91,8 @@ public class ServerExceptionFilter implements Filter {
       boolean isTrusted = trusted.get() == UserTrustStatus.TRUSTED
           && req.getParameter("simulateUntrusted") == null;
       response.setStatus(errorCode);
-      UserService service = userService.get();
-      String userEmail = service.isUserLoggedIn()
-          ? service.getCurrentUser().getEmail() : "(not logged in)";
+      UserContext ctx = userCtx.get();
+      String userEmail = ctx.hasUserId() ? ctx.getParticipantId().getAddress() : "";
       pageSkinWriter.get().write("Error " + errorCode, userEmail,
           ErrorPage.getGxpClosure(userEmail, "" + errorCode, isOverQuota, isTrusted, publicMessage,
               renderInternalMessage(Throwables.getStackTraceAsString(t))));

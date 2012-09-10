@@ -25,6 +25,7 @@ import com.google.appengine.api.users.User;
 import com.google.common.net.UriEscapers;
 import com.google.gxp.base.GxpContext;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.walkaround.util.server.RetryHelper.PermanentFailure;
 import com.google.walkaround.util.server.servlet.AbstractHandler;
 import com.google.walkaround.wave.server.Flag;
@@ -34,13 +35,13 @@ import com.google.walkaround.wave.server.gxp.AuthPopup;
 
 import org.waveprotocol.wave.model.wave.ParticipantId;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Handles the callback in the OAuth flow.
@@ -58,7 +59,7 @@ public class OAuthCallbackHandler extends AbstractHandler {
   @Inject @CallbackPath String callbackUrl;
   @Inject @Flag(FlagName.OAUTH_CLIENT_ID) String clientId;
   @Inject @Flag(FlagName.OAUTH_CLIENT_SECRET) String clientSecret;
-  @Inject User user;
+  @Inject Provider<User> user;
   @Inject @Flag(FlagName.ANALYTICS_ACCOUNT) String analyticsAccount;
 
   private void writeAccountRecordFromContext() throws IOException {
@@ -130,8 +131,8 @@ public class OAuthCallbackHandler extends AbstractHandler {
     // Google account for contact information and to import waves from; but it
     // is confusing, so we should disable it.)
     userContext.setOAuthCredentials(new OAuthCredentials(refreshToken, accessToken));
-    userContext.setUserId(new StableUserId(user.getUserId()));
-    userContext.setParticipantId(ParticipantId.ofUnsafe(user.getEmail()));
+    userContext.setUserId(new StableUserId(user.get().getUserId()));
+    userContext.setParticipantId(ParticipantId.ofUnsafe(user.get().getEmail()));
     log.info("User context: " + userContext);
     writeAccountRecordFromContext();
 

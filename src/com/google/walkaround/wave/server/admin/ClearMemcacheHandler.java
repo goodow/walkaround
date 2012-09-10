@@ -17,15 +17,15 @@
 package com.google.walkaround.wave.server.admin;
 
 import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.users.User;
 import com.google.inject.Inject;
 import com.google.walkaround.util.server.servlet.AbstractHandler;
-
-import java.io.IOException;
-import java.util.logging.Logger;
+import com.google.walkaround.wave.server.auth.UserContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Clears memcache.  Should only be exposed to admin users.
@@ -35,24 +35,26 @@ import javax.servlet.http.HttpServletResponse;
 public class ClearMemcacheHandler extends AbstractHandler {
 
   private final MemcacheService memcache;
-  private final User user;
+  private final UserContext userCtx;
 
   @SuppressWarnings("unused")
   private static final Logger log = Logger.getLogger(ClearMemcacheHandler.class.getName());
 
   @Inject
-  public ClearMemcacheHandler(MemcacheService memcache, User user) {
+  public ClearMemcacheHandler(MemcacheService memcache, UserContext userCtx) {
     this.memcache = memcache;
-    this.user = user;
+    this.userCtx = userCtx;
   }
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    log.warning("Memcache clear requested by " + user.getEmail());
+    String participantId = userCtx.hasParticipantId() ? userCtx.getParticipantId().getAddress()
+        : "(not logged in)";
+    log.warning("Memcache clear requested by " + participantId);
     memcache.clearAll();
     log.warning("Memcache cleared");
     resp.setContentType("text/plain");
-    resp.getWriter().println("Memcache cleared, " + user.getEmail());
+    resp.getWriter().println("Memcache cleared, " + participantId);
   }
 
 

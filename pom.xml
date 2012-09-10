@@ -254,7 +254,7 @@
             <configuration>
               <tasks>
                 <taskdef name="gxpc" classname="com.google.gxp.compiler.ant.GxpcTask" classpathref="maven.compile.classpath" />
-                <gxpc srcdir="${basedir}/src/com/google/walkaround" srcpaths="${basedir}/src" destdir="${project.build.directory}/generated-sources" target="com.google.walkaround.wave.server.gxp.messages" i18nwarn="true" />
+                <gxpc srcdir="${basedir}/src/com/google/walkaround/wave/server/gxp" srcpaths="${basedir}/src" destdir="${project.build.directory}/generated-sources" target="com.google.walkaround.wave.server.gxp.messages" i18nwarn="true" />
               </tasks>
             </configuration>
             <goals>

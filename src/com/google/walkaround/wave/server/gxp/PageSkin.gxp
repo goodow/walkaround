@@ -122,7 +122,10 @@
             <span id='user-email'>
               <gxp:eval expr='userEmail'/>
             </span>
-            <a href='/logout'><gxp:msg>logout</gxp:msg></a>
+            <gxp:if cond='userEmail.isEmpty()'>
+            <gxp:else/>
+              <a href='/logout'><gxp:msg>logout</gxp:msg></a>
+            </gxp:if>
           </span>
         </div>
         <gxp:eval expr='content'/>
