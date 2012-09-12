@@ -92,7 +92,7 @@ public class ServerExceptionFilter implements Filter {
           && req.getParameter("simulateUntrusted") == null;
       response.setStatus(errorCode);
       UserContext ctx = userCtx.get();
-      String userEmail = ctx.hasUserId() ? ctx.getParticipantId().getAddress() : "";
+      String userEmail = ctx.hasParticipantId() ? ctx.getParticipantId().getAddress() : "";
       pageSkinWriter.get().write("Error " + errorCode, userEmail,
           ErrorPage.getGxpClosure(userEmail, "" + errorCode, isOverQuota, isTrusted, publicMessage,
               renderInternalMessage(Throwables.getStackTraceAsString(t))));
