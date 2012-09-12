@@ -139,7 +139,7 @@ public class StackTraceDeobfuscator {
       // jsniIdent, className, memberName, sourceUri, sourceLine
       String[] parts =
           Lists.newArrayList(Splitter.on(",").split(symbolData)).toArray(new String[0]);
-      if (parts.length == 5) {
+      if (parts.length == 5 || parts.length == 6) {
         // This code is adapted from elsewhere, I don't understand it well enough to fix it.
         @SuppressWarnings("unused")
         String[] ref = parse(
