@@ -230,7 +230,7 @@ class NotifyRobot implements DeferredTask {
             }
           });
       OperationContextImpl context =
-          new OperationContextImpl(
+          new OperationContextImpl(convFacilities,
               converterManager.getEventDataConverter(protocolVersion), conversationUtil,
               new RobotWaveletData(waveletAndDeltas.getSnapshotAfterDeltas(),
                   waveletAndDeltas.getVersionAfterDeltas()));

@@ -22,6 +22,14 @@ import static org.waveprotocol.box.server.robots.util.RobotsUtil.createEmptyRobo
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+import com.google.walkaround.slob.server.AccessDeniedException;
+import com.google.walkaround.slob.server.SlobFacilities;
+import com.google.walkaround.slob.server.SlobNotFoundException;
+import com.google.walkaround.slob.shared.MessageException;
+import com.google.walkaround.slob.shared.SlobId;
+import com.google.walkaround.wave.server.model.ServerMessageSerializer;
+import com.google.walkaround.wave.shared.IdHack;
+import com.google.walkaround.wave.shared.WaveSerializer;
 import com.google.wave.api.ApiIdSerializer;
 import com.google.wave.api.InvalidRequestException;
 import com.google.wave.api.JsonRpcConstant.ParamsProperty;
@@ -34,6 +42,7 @@ import com.google.wave.api.event.EventSerializer;
 import com.google.wave.api.event.EventType;
 import com.google.wave.api.event.OperationErrorEvent;
 
+import org.waveprotocol.box.common.DeltaSequence;
 import org.waveprotocol.box.server.robots.OperationContext;
 import org.waveprotocol.box.server.robots.OperationResults;
 import org.waveprotocol.box.server.robots.RobotWaveletData;
@@ -48,7 +57,9 @@ import org.waveprotocol.wave.model.id.InvalidIdException;
 import org.waveprotocol.wave.model.id.WaveId;
 import org.waveprotocol.wave.model.id.WaveletId;
 import org.waveprotocol.wave.model.id.WaveletName;
+import org.waveprotocol.wave.model.operation.OperationException;
 import org.waveprotocol.wave.model.schema.SchemaCollection;
+import org.waveprotocol.wave.model.version.HashedVersion;
 import org.waveprotocol.wave.model.wave.ParticipantId;
 import org.waveprotocol.wave.model.wave.data.ObservableWaveletData;
 import org.waveprotocol.wave.model.wave.data.ReadableWaveletData;
@@ -57,8 +68,10 @@ import org.waveprotocol.wave.model.wave.data.impl.WaveletDataImpl;
 import org.waveprotocol.wave.model.wave.opbased.OpBasedWavelet;
 import org.waveprotocol.wave.util.logging.Log;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * Provides context for robot operations and gives access to the results.
@@ -106,6 +119,9 @@ class OperationContextImpl implements OperationContext, OperationResults {
   /** Used to create conversations. */
   private final ConversationUtil conversationUtil;
 
+  private static final WaveSerializer SERIALIZER = new WaveSerializer(new ServerMessageSerializer());
+  private final SlobFacilities convFacilities;
+
   /**
    * Constructs an operation context not bound to any wavelet.
    *
@@ -113,8 +129,9 @@ class OperationContextImpl implements OperationContext, OperationResults {
    *        objects.
    * @param conversationUtil used to create conversations.
    */
-  public OperationContextImpl(EventDataConverter converter, ConversationUtil conversationUtil) {
-    this(converter, conversationUtil, null);
+  public OperationContextImpl(SlobFacilities convFacilities, EventDataConverter converter,
+      ConversationUtil conversationUtil) {
+    this(convFacilities, converter, conversationUtil, null);
   }
 
   /**
@@ -127,8 +144,10 @@ class OperationContextImpl implements OperationContext, OperationResults {
    *        unbound context.
    * @param conversationUtil used to create conversations.
    */
-  public OperationContextImpl(EventDataConverter converter, ConversationUtil conversationUtil,
+  public OperationContextImpl(SlobFacilities convFacilities, EventDataConverter converter,
+      ConversationUtil conversationUtil,
       RobotWaveletData boundWavelet) {
+    this.convFacilities = convFacilities;
     this.converter = converter;
     this.conversationUtil = conversationUtil;
     this.boundWavelet = boundWavelet;
@@ -348,13 +367,34 @@ class OperationContextImpl implements OperationContext, OperationResults {
 
   /**
    * Takes snapshot of a wavelet, checking access for the given participant.
-   *
+   * 
    * @return snapshot on success, null on failure
    */
   private WaveletAndDeltas getWaveletAndDeltas(WaveletName waveletName, ParticipantId participant) {
-    // TODO(ljv): This needs to be implemented for walkaround to piggyback
-    // writes and for the active API.
-    LOG.severe("Cannot access wavelet " + waveletName);
-    return null;
+    Preconditions.checkNotNull(convFacilities, "call setupDataApi First");
+    SlobId id = IdHack.objectIdFromWaveletId(waveletName.waveletId);
+    String rawSnapshot = null;
+    try {
+      rawSnapshot = convFacilities.getSlobStore().loadAtVersion(id, null);
+    } catch (AccessDeniedException e) {
+      LOG.severe(participant + " tried to open " + waveletName + " which it isn't participating in");
+      return null;
+    } catch (SlobNotFoundException e) {
+      LOG.log(Level.INFO, "Wave not found", e);
+      return null;
+    } catch (IOException e) {
+      LOG.log(Level.SEVERE, "Server error loading wave", e);
+      throw new RuntimeException("Server error loading wave for " + id, e);
+    }
+    try {
+      WaveletDataImpl waveletData =
+          SERIALIZER.deserializeWavelet(IdHack.convWaveletNameFromConvObjectId(id), rawSnapshot);
+      waveletData.setHashedVersion(HashedVersion.unsigned(waveletData.getVersion()));
+      return WaveletAndDeltas.create(waveletData, DeltaSequence.empty());
+    } catch (MessageException e) {
+      throw new RuntimeException("MessageException deserializing snapshot for " + id, e);
+    } catch (OperationException e) {
+      throw new RuntimeException("OperationException creating WaveletAndDeltas for " + id, e);
+    }
   }
 }

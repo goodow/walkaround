@@ -27,7 +27,7 @@ import org.waveprotocol.box.server.robots.RobotSerializerModule;
  *
  * @author ljv@google.com (Lennard de Rijk)
  */
-class RobotApiModule extends AbstractModule {
+public class RobotApiModule extends AbstractModule {
 
   @Override
   protected void configure() {
