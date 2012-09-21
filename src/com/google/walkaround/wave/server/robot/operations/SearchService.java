@@ -86,11 +86,12 @@ public class SearchService implements OperationService {
       return toRtn;
     }
     for (UserIndexEntry index : waves) {
+      Integer unreadCount = index.getUnreadCount();
       Digest digest =
           new Digest(index.getTitle(), index.getSnippetHtml(), ApiIdSerializer.instance()
               .serialiseWaveId(IdHack.waveIdFromConvObjectId(index.getObjectId())), Arrays
               .asList(index.getCreator().getAddress()), index.getLastModifiedMillis(), index
-              .getLastModifiedMillis(), index.getUnreadCount(), index.getBlipCount());
+              .getLastModifiedMillis(), unreadCount == null ? 0 : unreadCount, index.getBlipCount());
       toRtn.addDigest(digest);
     }
     return toRtn;
