@@ -5,7 +5,13 @@
 # Ant build output.
 /build
 
-# Eclipse build output.
-/bin
-/test-classes
-/.settings
+# Maven build output.
+target/
+
+# Generated for Eclipse.
+.settings/
+.project
+.classpath
+
+# Created by OS.
+.DS_Store
