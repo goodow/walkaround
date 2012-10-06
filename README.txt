@@ -1,3 +1,10 @@
+== Getting Dependencies ==
+
+  Goodow Wave: https://github.com/goodow/wave/blob/moon/README-MAVEN.txt
+
+
+== Development And Running ==
+
 -- Option A: Import your project into Eclipse --
 
 Configure Eclipse following the instructions at 
@@ -25,7 +32,7 @@ line path.
 
 To compile your project without test and install the artifact to local repository:
 
-  mvn clean install -Dmaven.test.skip=true
+  mvn -f maven/pom.xml clean install -Dmaven.test.skip=true
   
 For a full listing of other goals, visit:
 http://mojo.codehaus.org/gwt-maven-plugin/plugin-info.html

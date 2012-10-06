@@ -4,14 +4,12 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+    <groupId>com.goodow.moon</groupId>
+    <artifactId>moon-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.goodow.moon</groupId>
   <artifactId>moon-walkaround</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
   <url>http://code.google.com/p/goodow/</url>
   <inceptionYear>2012</inceptionYear>
   <licenses>
@@ -30,56 +28,30 @@
       <url>http://mandubian-mvn.googlecode.com/svn/trunk/mandubian-mvn/repository/</url>
     </repository>
   </repositories>
-  <properties>
-    <!-- Convenience property to set the GWT version -->
-    <gwtVersion>2.5.0-rc1</gwtVersion>
-    <guice.version>3.0</guice.version>
-
-    <!-- GWT needs at least java 1.6 -->
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
-    
-    <!-- GAE properties -->
-    <gae.version>1.7.0</gae.version>
-    <gae.home>${user.home}/.m2/repository/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
-
-    <!-- Don't let your Mac use a crazy non-standard encoding -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
   
   <dependencies>
     <!-- Google Web Toolkit (GWT) -->
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
-      <version>${gwtVersion}</version>
-      <!-- "provided" so that we don't deploy -->
-      <scope>provided</scope>
     </dependency>
 
     <!-- Google App Engine (GAE) -->
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>
-      <version>${gae.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-testing</artifactId>
-      <version>${gae.version}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-stubs</artifactId>
-      <version>${gae.version}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-labs</artifactId>
-      <version>${gae.version}</version>
     </dependency>
     
     <!-- Guice -->
@@ -88,7 +60,20 @@
       <artifactId>guice-multibindings</artifactId>
       <version>${guice.version}</version>
     </dependency>
+    
+    <!-- Internal projects -->
+    <dependency>
+      <groupId>com.goodow.moon</groupId>
+      <artifactId>moon-wave</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.goodow.moon</groupId>
+      <artifactId>moon-walkaround-pst</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
+    <!-- Miscellaneous -->
     <dependency>
       <groupId>com.google.gdata</groupId>
       <artifactId>gdata-contacts-3.0</artifactId>
@@ -190,24 +175,14 @@
       </exclusions>
     </dependency>
     
-    <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-wave</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
     <!-- Unit tests -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.10</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>1.9.5-rc1</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -232,7 +207,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.7</version>
         <executions>
           <execution>
             <id>add-source</id>
@@ -242,8 +216,6 @@
             </goals>
             <configuration>
               <sources>
-                <source>${project.basedir}/proto_src</source>
-                <source>${project.basedir}/build/gen/messages</source>
                 <source>${project.basedir}/more-guava</source>
                 <source>${project.build.directory}/generated-sources</source>
               </sources>
@@ -253,7 +225,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version>
         <executions>
           <execution>
             <phase>generate-sources</phase>
@@ -272,19 +243,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <includePom>true</includePom>
-        </configuration>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
     <!-- Required by m2e for import into eclipse. No effect on command line builds  -->

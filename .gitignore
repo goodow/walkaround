@@ -1,10 +1,3 @@
-# Created by get-third-party-deps script.
-/third_party
-/third_party_src
-
-# Ant build output.
-/build
-
 # Maven build output.
 target/
 
