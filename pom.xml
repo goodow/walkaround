@@ -20,8 +20,8 @@
   </licenses>
   <repositories>
     <repository>
-      <id>appengine-mapreduce</id>
-      <url>http://nexus.bedatadriven.com/content/repositories/thirdparty/</url>
+      <id>goodow-wave</id>
+      <url>https://raw.github.com/goodow/maven/master/repositories/wave/</url>
     </repository>
     <repository>
       <id>google-gdata</id>
@@ -89,11 +89,6 @@
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-mapreduce</artifactId>
       <version>r341</version>
-    </dependency>
-    <dependency>
-      <groupId>com.googlecode</groupId>
-      <artifactId>charts4j</artifactId>
-      <version>1.2</version>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
