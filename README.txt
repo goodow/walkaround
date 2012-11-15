@@ -1,6 +1,6 @@
 == Getting Dependencies ==
 
-  Goodow Wave: https://github.com/goodow/wave/blob/moon/README-MAVEN.txt
+  Goodow Wave: https://github.com/goodow/wave/
 
 
 == Development And Running ==

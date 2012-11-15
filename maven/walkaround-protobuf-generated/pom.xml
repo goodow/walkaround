@@ -1,13 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.goodow.wave</groupId>
-    <artifactId>wave-parent</artifactId>
+    <groupId>com.goodow.walkaround</groupId>
+    <artifactId>walkaround-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.goodow.walkaround</groupId>
-  <artifactId>walkaround-parent</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>walkaround-protobuf-generated</artifactId>
   <url>https://github.com/goodow/walkaround/</url>
   <inceptionYear>2012</inceptionYear>
   <licenses>
@@ -16,16 +14,22 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-  <properties>
-    <wave.groupId>com.goodow.wave</wave.groupId>
-    <wave.version>${project.version}</wave.version>
-  </properties>
   
-  <modules>
-    <module>walkaround-guava</module>
-    <module>walkaround-gxp-generated</module>
-    <module>walkaround-protobuf-generated</module>
-    <module>walkaround-pst-generated</module>
-    <module>../</module>
-  </modules>  
+  <dependencies>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+       <artifactId>protobuf-java</artifactId>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <sourceDirectory>${project.basedir}/../../proto_src</sourceDirectory>
+    
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>

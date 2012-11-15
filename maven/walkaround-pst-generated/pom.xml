@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.goodow.moon</groupId>
-    <artifactId>moon-parent</artifactId>
+    <groupId>com.goodow.walkaround</groupId>
+    <artifactId>walkaround-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>moon-walkaround-pst</artifactId>
-  <url>http://code.google.com/p/goodow/</url>
+  <artifactId>walkaround-pst-generated</artifactId>
+  <url>https://github.com/goodow/walkaround/</url>
   <inceptionYear>2012</inceptionYear>
   <licenses>
     <license>
@@ -25,21 +25,23 @@
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-walkaround-protobuf</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+    
+    <!-- Internal modules -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>moon-pst-generator</artifactId>
+      <artifactId>walkaround-protobuf-generated</artifactId>
       <version>${project.version}</version>
-      <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-communication</artifactId>
-      <version>${project.version}</version>
+      <groupId>${wave.groupId}</groupId>
+      <artifactId>wave-communication</artifactId>
+      <version>${wave.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${wave.groupId}</groupId>
+      <artifactId>wave-pst-generator</artifactId>
+      <version>${wave.version}</version>
+      <!-- Can't replaced by provided scope, exec-maven-plugin requires this. -->
       <optional>true</optional>
     </dependency>
   </dependencies>
@@ -53,16 +55,16 @@
         <executions>
           <execution>
             <id>unpack-pst-templates</id>
-            <phase>validate</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>com.goodow.moon</groupId>
-                  <artifactId>moon-pst-generator</artifactId>
-                  <version>${project.version}</version>
+                  <groupId>${wave.groupId}</groupId>
+                  <artifactId>wave-pst-generator</artifactId>
+                  <version>${wave.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/pst-templates/</outputDirectory>
@@ -78,7 +80,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <executions>
           <execution>
-            <id>Generate-Diff</id>
+            <id>Generate-Diff-Pst</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
@@ -89,7 +91,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>Generate-Extensions</id>
+            <id>Generate-Extensions-Pst</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
@@ -100,7 +102,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>Generate-GoogleImport</id>
+            <id>Generate-GoogleImport-Pst</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
@@ -111,7 +113,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>Generate-Proto</id>
+            <id>Generate-Proto-Pst</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
@@ -122,7 +124,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>Generate-Walkaround</id>
+            <id>Generate-Walkaround-Pst</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
@@ -139,7 +141,7 @@
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
           <execution>
-            <id>add-source</id>
+            <id>add-generated-pst-sources</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>add-source</goal>

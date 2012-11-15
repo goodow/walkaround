@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.goodow.moon</groupId>
-    <artifactId>moon-parent</artifactId>
+    <groupId>com.goodow.walkaround</groupId>
+    <artifactId>walkaround-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>moon-walkaround-protobuf</artifactId>
-  <url>http://code.google.com/p/goodow/</url>
+  <artifactId>walkaround-guava</artifactId>
+  <url>https://github.com/goodow/walkaround/</url>
   <inceptionYear>2012</inceptionYear>
   <licenses>
     <license>
@@ -17,13 +17,13 @@
   
   <dependencies>
     <dependency>
-      <groupId>com.google.protobuf</groupId>
-       <artifactId>protobuf-java</artifactId>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
     </dependency>
   </dependencies>
   
   <build>
-    <sourceDirectory>${project.basedir}/../../proto_src</sourceDirectory>
+    <sourceDirectory>${project.basedir}/../../more-guava</sourceDirectory>
     
     <plugins>
       <plugin>

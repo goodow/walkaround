@@ -4,13 +4,14 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.goodow.moon</groupId>
-    <artifactId>moon-parent</artifactId>
+    <groupId>com.goodow.walkaround</groupId>
+    <artifactId>walkaround-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>maven/pom.xml</relativePath>
   </parent>
-  <artifactId>moon-walkaround</artifactId>
+  <artifactId>walkaround-all</artifactId>
   <packaging>jar</packaging>
-  <url>http://code.google.com/p/goodow/</url>
+  <url>https://github.com/goodow/walkaround/</url>
   <inceptionYear>2012</inceptionYear>
   <licenses>
     <license>
@@ -61,19 +62,51 @@
       <version>${guice.version}</version>
     </dependency>
     
-    <!-- Internal projects -->
+    <!-- Internal modules -->
     <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-wave</artifactId>
+      <groupId>${wave.groupId}</groupId>
+      <artifactId>wave-all</artifactId>
+      <version>${wave.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${wave.groupId}</groupId>
+      <artifactId>wave-protobuf-generated</artifactId>
+      <version>${wave.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>walkaround-guava</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.goodow.moon</groupId>
-      <artifactId>moon-walkaround-pst</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>walkaround-gxp-generated</artifactId>
       <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>${wave.groupId}</groupId>
+          <artifactId>wave-model</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>walkaround-pst-generated</artifactId>
+      <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>${wave.groupId}</groupId>
+          <artifactId>wave-communication</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Miscellaneous -->
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.google.gdata</groupId>
       <artifactId>gdata-contacts-3.0</artifactId>
@@ -184,90 +217,11 @@
   <build>
     <sourceDirectory>${project.basedir}/src</sourceDirectory>
     <testSourceDirectory>${project.basedir}/test</testSourceDirectory>
-    <resources>
-      <resource>
-        <directory>${project.build.directory}/generated-sources</directory>
-        <includes>
-          <include>**/*.properties</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>${project.build.sourceDirectory}</directory>
-        <includes>
-          <include>**/*.properties</include>
-        </includes>
-      </resource>
-    </resources>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>add-source</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>add-source</goal>
-            </goals>
-            <configuration>
-              <sources>
-                <source>${project.basedir}/more-guava</source>
-                <source>${project.build.directory}/generated-sources</source>
-              </sources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <configuration>
-              <tasks>
-                <taskdef name="gxpc" classname="com.google.gxp.compiler.ant.GxpcTask" classpathref="maven.compile.classpath" />
-                <gxpc srcdir="${basedir}/src/com/google/walkaround/wave/server/gxp" srcpaths="${basedir}/src" destdir="${project.build.directory}/generated-sources" target="com.google.walkaround.wave.server.gxp.messages" i18nwarn="true" />
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
       </plugin>
     </plugins>
-    <!-- Required by m2e for import into eclipse. No effect on command line builds  -->
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <versionRange>[1.7,)</versionRange>
-                    <goals>
-                      <goal>run</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <execute />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
 </project>
